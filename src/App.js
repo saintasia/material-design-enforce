@@ -1,23 +1,38 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Box from '@material-ui/core/Box';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <h5>Sample code for adding custom rules on top of MUI library</h5>
+        <Box
+          bgcolor="text.hint"
+          color="primary.main"
+          boxShadow={1}
+          width={400}
+          my={7}
+          p={5}
         >
-          Learn React
-        </a>
+          Totally unacceptable box
+          <br/><input type="text" />
+          <br/>
+          <table>
+            <thead>
+              <tr>
+                <th>...</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>...</td>
+              </tr>
+            </tbody>
+          </table>
+          <br/>
+          <a>link</a>
+        </Box>
       </header>
     </div>
   );

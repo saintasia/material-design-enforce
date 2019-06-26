@@ -1,15 +1,176 @@
 rules:
-  - id: com.example.1
-    pattern: Github
-    message: Do you want to write GitHub?
+  - id: material.palette.text
+    message: Only use text.primary and text.secondary for text color
+    pattern:
+      - token: color=${color:string}
+        where:
+          color:
+            not:
+              - text.primary
+              - text.secondary
     glob:
-      - "**/*.rb"
-      - "**/*.{yaml,yml}"
-      - "public/**/*.html"
+      - "**/*.js"
     fail:
-      - Signup via Github
+      - color="secondary.main"
     pass:
-      - Signup via GitHub
+      - color="text.primary"
+
+  - id: material.palette.background
+    message: Only use primary.main, secondary.main, and error.main for background color
+    pattern:
+      - token: bgcolor=${bgcolor:string}
+        where:
+          bgcolor:
+            not:
+              - primary.main
+              - secondary.main
+              - error.main
+    glob:
+      - "**/*.js"
+    fail:
+      - bgcolor="text.hint"
+    pass:
+      - bgcolor="secondary.main"
+
+  - id: material.shadows
+    message: Only use boxShadow values of 0 and 2
+    pattern:
+      - token: boxShadow={${shadow:number}}
+        where:
+          shadow:
+            not:
+              - 0
+              - 2
+    glob:
+      - "**/*.js"
+    fail:
+      - boxShadow={1}
+    pass:
+      - boxShadow={2}
+
+  - id: material.sizing
+    message: For layout, only use widths from 1/12 to 12/12 in fractions.
+    pattern:
+      - token: width={${num:number}/${denum:number}}
+        where:
+          num: true
+          denum:
+            not: 12
+      - token: width=${number:string}
+        where:
+          number: true
+      - token: width={${number:number}}
+        where:
+          number: true
+    glob:
+      - "**/*.js"
+    fail:
+      - width={200}
+      - width="200%"
+      - width={1/10}
+    pass:
+      - width={6/12}
+
+  - id: material.spacing
+    message: For spacing, please use the default with the following values - 0.5, 1, 1.5, 2, 4, 6, or 8
+    pattern:
+      - token: ${prop:identifier}={${space:number}}
+        where:
+          prop: /(m|mt|mr|mb|ml|mx|my|p|pt|pr|pb|pl|px|py)/
+          space:
+            not:
+              - 0.5
+              - 1
+              - 1.5
+              - 2
+              - 4
+              - 6
+              - 8
+    glob:
+      - "**/*.js"
+    fail:
+      - mx={12}
+    pass:
+      - m={8}
+
+  - id: material.components.input
+    message: Please use dedicated component <TextField /> for all inputs
+    pattern:
+      regexp: '<input.*\/>'
+    glob:
+      - "**/*.js"
+    fail:
+      - '<input type="text" />'
+    pass:
+      - '<TextField value="textfield" />'
+
+  - id: material.components.table
+    message: Please use dedicated component <Table /> for all tables
+    pattern:
+      regexp: '(<table.*>|<\/table>)'
+    glob:
+      - "**/*.js"
+    fail:
+      - '<table>...</table>'
+    pass:
+      - '<Table>...</Table>'
+
+  - id: material.components.thead
+    message: Please use dedicated component <TableHead /> instead of <thead> tag
+    pattern:
+      regexp: '(<thead.*>|<\/thead>)'
+    glob:
+      - "**/*.js"
+    fail:
+      - '<thead>...</thead>'
+    pass:
+      - '<TableHead>...</TableHead>'
+
+  - id: material.components.tbody
+    message: Please use dedicated component <TableBody /> instead of <tbody> tag
+    pattern:
+      regexp: '(<tbody.*>|<\/tbody>)'
+    glob:
+      - "**/*.js"
+    fail:
+      - '<tbody>...</tbody>'
+    pass:
+      - '<TableBody>...</TableBody>'
+
+  - id: material.components.tr
+    message: Please use dedicated component <TableRow /> instead of <tr> tag
+    pattern:
+      regexp: '(<tr.*>|<\/tr>)'
+    glob:
+      - "**/*.js"
+    fail:
+      - '<tr>...</tr>'
+    pass:
+      - '<TableRow>...</TableRow>'
+
+  - id: material.components.thtd
+    message: Please use dedicated component <TableCell /> instead of <th> and <td> tags
+    pattern:
+      regexp: '(<th.*>|<\/th>|<td.*>|<\/td>)'
+    glob:
+      - "**/*.js"
+    fail:
+      - '<td>...</td>'
+      - '<th>...</th>'
+    pass:
+      - '<TableCell>...</TableCell>'
+
+  - id: material.components.link
+    message: Please use dedicated component <Link /> instead of <a> tag
+    pattern:
+      regexp: '(<a.*?>|<\/a>)'
+      multiline: true
+    glob:
+      - "**/*.js"
+    fail:
+      - '<a>here</a>'
+    pass:
+      - '<Link>here</Link>'
 
 exclude:
   - node_modules
