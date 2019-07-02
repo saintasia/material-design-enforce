@@ -2,8 +2,10 @@ This is a sample code for enforcing your own custom rules with [Goodcheck](https
 
 ## Run and test localy
 
+
+
 In the project directory, to get the project started you can run:
-`npm start`
+`npm install` and then `npm start`
 
 To run goodcheck, first install it
 `gem install goodcheck`
