@@ -51,17 +51,10 @@ rules:
   - id: material.sizing
     message: For layout, only use widths from 1/12 to 12/12 in fractions.
     pattern:
-      - token: width={${num:number}/${denum:number}}
+      - token: width={${num}}
         where:
-          num: true
-          denum:
-            not: 12
-      - token: width=${number:string}
-        where:
-          number: true
-      - token: width={${number:number}}
-        where:
-          number: true
+          num:
+            not: /(1|2|3|4|5|6|7|8|9|10|11|12)\/12/
     glob:
       - "**/*.js"
     fail:
